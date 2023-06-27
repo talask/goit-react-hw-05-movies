@@ -5,21 +5,21 @@ export const Movies = () => {
        <div>
             <Container>
                 <div>
-                    <img src="" alt="" />
-                    <h2></h2>
-                    <p></p>
-                    <h3></h3>
-                    <p></p>
-                    <h3></h3>
-                    <p></p>
+                    {/* <img src="" alt="" /> */}
+                    <h2>Movie</h2>
+                    <p>Movie</p>
+                    <h3>Movie</h3>
+                    <p>Movie</p>
+                    <h3>Movie</h3>
+                    <p>Movie</p>
                 </div>
                 <div>
-                    <h3></h3>
+                    <h3>Movie</h3>
                     <ul>
-                        <li></li>
-                        <li></li>
+                        <li>Movie</li>
+                        <li>Movie</li>
                     </ul>
-                </div>
+                </div> 
             </Container>
        </div> 
     )
