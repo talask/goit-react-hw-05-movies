@@ -1,31 +1,52 @@
-import { useParams } from "react-router-dom";
+import { useParams,  } from "react-router-dom";
+import { useState, useEffect } from 'react';
 import { getMovies } from '../MoviessAPI/MoviesAPI.js';
+import { Loader } from '../Loader/Loader.jsx';
 
 export const MovieDetails = () => {
+    const [id, setId] = useState('');
+    const [movie, setMovie] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
     const { movieId } = useParams();
-    console.log(movieId);
+    //setId(movieId);
+
+   
+    useEffect( () => {
+        setId(movieId);
+
     const getMovieToId = async () => {
+        
         try{
+            setIsLoading(true);
+            setError(null);
+
             const data = await getMovies('movie', movieId);
-            return data;
+            console.log(data)
+            if(data.id)
+                setMovie(data[0]);
+            else return;
         }catch(error){
+            setError(error.message);
             console.log(error)
         }finally{
-            console.log("finally")
+            setIsLoading(false);
         }
         
         
-    } 
+    }
     
-    const movie = getMovieToId();
-   // console.log(movie);
-    //const location = useLocation();
+    getMovieToId();
+
+}, [id] );
+    
+
     // genres, title, overview,vote_average, backdrop_path, poster_path
-
-
 
     return (
         <>
+        {isLoading && <Loader />}
+        {error && <p>{error}</p>}
         <div>
                     <img src={movie.poster_path} alt={movie.title} />
                     <h2>{movie.title}</h2>
