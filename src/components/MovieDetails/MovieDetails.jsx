@@ -14,7 +14,10 @@ export const MovieDetails = () => {
    
     useEffect( () => {
         setId(movieId);
+    }, [movieId]);
 
+    useEffect( () => {
+       
     const getMovieToId = async () => {
         
         try{
@@ -23,9 +26,10 @@ export const MovieDetails = () => {
 
             const data = await getMovies('movie', movieId);
             console.log(data)
-            if(data.id)
-                setMovie(data[0]);
+            if(data)
+                setMovie(data);
             else return;
+
         }catch(error){
             setError(error.message);
             console.log(error)
@@ -38,7 +42,7 @@ export const MovieDetails = () => {
     
     getMovieToId();
 
-}, [id] );
+}, [movieId] );
     
 
     // genres, title, overview,vote_average, backdrop_path, poster_path
@@ -48,7 +52,8 @@ export const MovieDetails = () => {
         {isLoading && <Loader />}
         {error && <p>{error}</p>}
         <div>
-                    <img src={movie.poster_path} alt={movie.title} />
+            
+                    <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={movie.title} width="350px"/>
                     <h2>{movie.title}</h2>
                     <p>{movie.vote_average}</p>
                     <h3>Overview</h3>

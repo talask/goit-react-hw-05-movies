@@ -17,8 +17,8 @@ export const Home = () => {
                 setError(null);
                 const data = await getMovies('home');
                
-                if(data.length > 0) {
-                    setMovies(data);
+                if(data.results.length > 0) {
+                    setMovies(data.results);
                 }else{
                     alert('Ooops.. Nothing find')
                 }
