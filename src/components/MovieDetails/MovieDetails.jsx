@@ -1,21 +1,17 @@
-import { useParams,  } from "react-router-dom";
+import { useParams, Link, useLocation, Outlet } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { getMovies } from '../MoviessAPI/MoviesAPI.js';
 import { Loader } from '../Loader/Loader.jsx';
 
 export const MovieDetails = () => {
-    const [id, setId] = useState('');
+    const location = useLocation();
     const [movie, setMovie] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const { movieId } = useParams();
-    //setId(movieId);
 
+    const{ genres,title, overview,vote_average,  poster_path, } = movie;
    
-    useEffect( () => {
-        setId(movieId);
-    }, [movieId]);
-
     useEffect( () => {
        
     const getMovieToId = async () => {
@@ -25,11 +21,11 @@ export const MovieDetails = () => {
             setError(null);
 
             const data = await getMovies('movie', movieId);
-            console.log(data)
+            //console.log(data)
             if(data)
                 setMovie(data);
             else return;
-
+           
         }catch(error){
             setError(error.message);
             console.log(error)
@@ -41,7 +37,7 @@ export const MovieDetails = () => {
     }
     
     getMovieToId();
-
+   
 }, [movieId] );
     
 
@@ -53,20 +49,28 @@ export const MovieDetails = () => {
         {error && <p>{error}</p>}
         <div>
             
-                    <img src={`https://image.tmdb.org/t/p/original${movie.poster_path}`} alt={movie.title} width="350px"/>
-                    <h2>{movie.title}</h2>
-                    <p>{movie.vote_average}</p>
+                    <img src={`https://image.tmdb.org/t/p/original${poster_path}`} alt={title} width="350px"/>
+                    <h2>{title}</h2>
+                    <p>User Score: {vote_average*10}%</p>
                     <h3>Overview</h3>
-                    <p>{movie.overview}</p>
+                    <p>{overview}</p>
                     <h3>Genres</h3>
-                    <p>movie</p>
+                    
+                    <p>{genres && genres.map(({name}) => name).join(" ")}</p>
                 </div>
                 <div>
-                    <h3>Movie</h3>
+                    <h3>Aditional Information</h3>
                     <ul>
-                        <li>Movie</li>
-                        <li>Movie</li>
+                        <li key="cast">
+                            <Link to="cast" >Cast</Link>
+                        </li>
+                        <li key="reviews">
+                            <Link to="reviews" state={{ from: location }}>Reviews</Link>
+                        </li>
+                        
+                        
                     </ul>
+                    <Outlet />
                 </div> 
             </>
     )
