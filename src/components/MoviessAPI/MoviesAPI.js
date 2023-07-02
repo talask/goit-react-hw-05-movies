@@ -7,8 +7,7 @@ const URL = 'https://api.themoviedb.org/3/';
 const options = {
     home: 'trending/all/day',
     movie: 'movie/',
-    cast: "/credits",
-    reviews: "/reviews",
+    search: "/search/",
     
 }
 

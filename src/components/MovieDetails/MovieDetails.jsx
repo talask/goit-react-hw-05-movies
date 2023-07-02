@@ -2,11 +2,13 @@ import { useParams, Link, useLocation, Outlet } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { getMovies } from '../MoviessAPI/MoviesAPI.js';
 import { Loader } from '../Loader/Loader.jsx';
+import { Searchbar } from "components/Searchbar/Searchbar.jsx";
 
 export const MovieDetails = () => {
     const location = useLocation();
     const [movie, setMovie] = useState({});
     const [isLoading, setIsLoading] = useState(false);
+    const [search, setSearch] = useState('');
     const [error, setError] = useState(null);
     const { movieId } = useParams();
 
@@ -14,7 +16,7 @@ export const MovieDetails = () => {
    
     useEffect( () => {
        
-    const getMovieToId = async () => {
+        const getMovieToId = async () => {
         
         try{
             setIsLoading(true);
@@ -35,33 +37,42 @@ export const MovieDetails = () => {
         
         
     }
-    
+    console.log(movieId)
+    if(movieId)
     getMovieToId();
    
 }, [movieId] );
     
 
+function handleSubmit(value) {
+    setSearch(value);
+    
+  }
+
     // genres, title, overview,vote_average, backdrop_path, poster_path
 
     return (
         <>
-        {isLoading && <Loader />}
-        {error && <p>{error}</p>}
-        <div>
-            
-                    <img src={`https://image.tmdb.org/t/p/original${poster_path}`} alt={title} width="350px"/>
-                    <h2>{title}</h2>
-                    <p>User Score: {vote_average*10}%</p>
-                    <h3>Overview</h3>
-                    <p>{overview}</p>
-                    <h3>Genres</h3>
-                    
-                    <p>{genres && genres.map(({name}) => name).join(" ")}</p>
-                </div>
+            {isLoading && <Loader />}
+            {error && <p>{error}</p>}
+            {
+                movieId 
+            ? <>
                 <div>
-                    <h3>Aditional Information</h3>
-                    <ul>
-                        <li key="cast">
+            
+                <img src={`https://image.tmdb.org/t/p/original${poster_path}`} alt={title} width="350px"/>
+                <h2>{title}</h2>
+                <p>User Score: {vote_average*10}%</p>
+                <h3>Overview</h3>
+                <p>{overview}</p>
+                <h3>Genres</h3>
+                    
+                <p>{genres && genres.map(({name}) => name).join(" ")}</p>
+            </div>
+            <div>
+                <h3>Aditional Information</h3>
+                <ul>
+                    <li key="cast">
                             <Link to="cast" >Cast</Link>
                         </li>
                         <li key="reviews">
@@ -72,6 +83,12 @@ export const MovieDetails = () => {
                     </ul>
                     <Outlet />
                 </div> 
+            </>
+            : 
+            <>
+                <Searchbar onSubmit={ handleSubmit }/>
+            </>
+                 }
             </>
     )
 }
