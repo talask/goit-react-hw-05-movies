@@ -62,17 +62,17 @@ export const MovieDetails = () => {
                 <Link to={backLinkHref}>Back to movies</Link>
             </p>
                  
-                <Details>
+            <Details>
             
                 <img src={`https://image.tmdb.org/t/p/original${poster_path}`} alt={title} width="350px"/>
                 <Wrapper>
-                <h2>{title}</h2>
-                <p>User Score: {vote_average*10}%</p>
-                <h3>Overview</h3>
-                <p>{overview}</p>
-                <h3>Genres</h3>
+                    <h2>{title}</h2>
+                    <p>User Score: {vote_average*10}%</p>
+                    <h3>Overview</h3>
+                    <p>{overview}</p>
+                    <h3>Genres</h3>
                     
-                <p>{genres && genres.map(({name}) => name).join(" ")}</p>
+                    <p>{genres && genres.map(({name}) => name).join(" ")}</p>
                 </Wrapper>
             </Details>
             <div>
