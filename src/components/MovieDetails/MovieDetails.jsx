@@ -2,6 +2,7 @@ import { useParams, Link, useLocation, Outlet } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { getMovies } from '../MoviessAPI/MoviesAPI.js';
 import { Loader } from '../Loader/Loader.jsx';
+import { Details, Wrapper } from "./Movie.styled.jsx";
 
 
 export const MovieDetails = () => {
@@ -61,9 +62,10 @@ export const MovieDetails = () => {
                 <Link to={backLinkHref}>Back to movies</Link>
             </p>
                  
-                <div>
+                <Details>
             
                 <img src={`https://image.tmdb.org/t/p/original${poster_path}`} alt={title} width="350px"/>
+                <Wrapper>
                 <h2>{title}</h2>
                 <p>User Score: {vote_average*10}%</p>
                 <h3>Overview</h3>
@@ -71,7 +73,8 @@ export const MovieDetails = () => {
                 <h3>Genres</h3>
                     
                 <p>{genres && genres.map(({name}) => name).join(" ")}</p>
-            </div>
+                </Wrapper>
+            </Details>
             <div>
                 <h3>Aditional Information</h3>
                 <ul>
