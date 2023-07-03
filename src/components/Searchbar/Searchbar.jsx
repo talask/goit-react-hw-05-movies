@@ -46,7 +46,7 @@ const schema = yup.object().shape({
 });
 
 export const Searchbar = () => {
-   // const [search, setSearch] = useState('');
+   const [search, setSearch] = useState('');
     const [movies, setMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -59,6 +59,7 @@ export const Searchbar = () => {
     //   };
 
     function onSubmit(query) {
+        setSearch(query);
         const nextParams = query !== "" ? { query } : {};
         setSearchParams(nextParams);
         
@@ -66,14 +67,14 @@ export const Searchbar = () => {
     
       
     useEffect( () => {
-        
+       
         const getsearchMovie = async () => {
         
         try{
             setIsLoading(true);
             setError(null);
-            console.log(searchParams);
-            const data = await getMovies('search', '', `${searchParams}&`);
+           
+            const data = await getMovies('search', '', `query=${search}&`);
             //console.log(data)
             if(data)
                 setMovies(data.results);
@@ -89,12 +90,12 @@ export const Searchbar = () => {
         
     }
     
-    if(searchParams.length > 0) {
+    if(search.length > 0) {
         getsearchMovie();
     }
    
    
-}, [searchParams] );
+}, [search] );
          
     return (
         <>
@@ -104,9 +105,9 @@ export const Searchbar = () => {
             <Formik
                 initialValues = {initialValues}
                 validationSchema = {schema}
-                onSubmit = {(values, {resetForm}) => {
+                onSubmit = {(values) => {
                     onSubmit(values.search);
-                    resetForm();
+                    //resetForm();
                 }}
             >
                 <SearchForm>

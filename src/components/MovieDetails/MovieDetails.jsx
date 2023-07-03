@@ -6,6 +6,8 @@ import { Loader } from '../Loader/Loader.jsx';
 
 export const MovieDetails = () => {
     const location = useLocation();
+    
+    const backLinkHref = location.state?.from ?? "/movies";
     const [movie, setMovie] = useState({});
     const [isLoading, setIsLoading] = useState(false);
    
@@ -23,7 +25,7 @@ export const MovieDetails = () => {
             setError(null);
 
             const data = await getMovies('movie', movieId);
-            //console.log(data)
+           
             if(data)
                 setMovie(data);
             else return;
@@ -37,7 +39,7 @@ export const MovieDetails = () => {
         
         
     }
-    console.log(movieId)
+   
     if(movieId)
     getMovieToId();
    
@@ -55,6 +57,10 @@ export const MovieDetails = () => {
             {
                 movieId 
             && <>
+            <p>
+                <Link to={backLinkHref}>Back to movies</Link>
+            </p>
+                 
                 <div>
             
                 <img src={`https://image.tmdb.org/t/p/original${poster_path}`} alt={title} width="350px"/>

@@ -9,8 +9,8 @@ export const Movies = () => {
     return (
        <div>
             <Container>
-                <MovieDetails />
                 <Searchbar />
+                <MovieDetails />
             </Container>
        </div> 
     )
