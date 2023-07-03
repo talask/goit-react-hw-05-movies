@@ -2,13 +2,12 @@ import PropTypes from 'prop-types';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { FiSearch } from 'react-icons/fi';
-import { useState, useEffect } from 'react';
 import {  SearchFormBtn } from './Searchbar.styled';
 import styled from 'styled-components';
-import { getMovies } from '../MoviessAPI/MoviesAPI.js';
-import { Loader } from '../Loader/Loader.jsx';
-import { MovieList } from '../MovieList/MovieList'
-import { useSearchParams } from "react-router-dom";
+
+
+//import { MovieList } from '../MovieList/MovieList'
+
 
 const SearchForm = styled(Form)`
     display: flex;
@@ -38,82 +37,31 @@ const SearchForm = styled(Form)`
 `;
 
 const initialValues = {
-    search: '',
+    query: '',
 };
 
 const schema = yup.object().shape({
-    search: yup.string().required(),
+    query: yup.string().required(),
 });
 
-export const Searchbar = () => {
-   const [search, setSearch] = useState('');
-    const [movies, setMovies] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [searchParams, setSearchParams] = useSearchParams();
-    //const movieName = searchParams.get("name") ?? "";
-
-    // const updateQueryString = (query) => {
-    //     const nextParams = query !== "" ? { query } : {};
-    //     setSearchParams(nextParams);
-    //   };
-
-    function onSubmit(query) {
-        setSearch(query);
-        const nextParams = query !== "" ? { query } : {};
-        setSearchParams(nextParams);
-        
-      }
-    
-      
-    useEffect( () => {
-       
-        const getsearchMovie = async () => {
-        
-        try{
-            setIsLoading(true);
-            setError(null);
-           
-            const data = await getMovies('search', '', `query=${search}&`);
-            //console.log(data)
-            if(data)
-                setMovies(data.results);
-            else return;
-           
-        }catch(error){
-            setError(error.message);
-            console.log(error)
-        }finally{
-            setIsLoading(false);
-        }
-        
-        
-    }
-    
-    if(search.length > 0) {
-        getsearchMovie();
-    }
-   
-   
-}, [search] );
-         
+export const Searchbar = ({onSubmit}) => {
+          
     return (
-        <>
-            {isLoading && <Loader />}
-            {error && <p>{error}</p>}
+                  
         <div>
             <Formik
                 initialValues = {initialValues}
                 validationSchema = {schema}
                 onSubmit = {(values) => {
-                    onSubmit(values.search);
+                    onSubmit(values.query);
                     //resetForm();
                 }}
             >
                 <SearchForm>
                     <SearchFormInput
                         type="text"
-                        name="search"
+                        name="query"
+                       
                         placeholder="Search movie"
                         
                     />
@@ -125,8 +73,7 @@ export const Searchbar = () => {
                 </SearchForm>
             </Formik>
         </div>
-        {movies.length > 0 && <MovieList movies={movies} />}
-        </>
+
         )
     
 };
