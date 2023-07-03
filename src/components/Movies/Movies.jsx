@@ -16,7 +16,7 @@ export const Movies = () => {
     const [error, setError] = useState(null);
     const [searchParams, setSearchParams] = useSearchParams();
 
-   // const movietName = searchParams.get("query") ?? "";
+    const movieName = searchParams.get("query") ?? "";
 
     useEffect( () => {
        
@@ -62,7 +62,7 @@ const onSubmit = (query) => {
     return (
        <div>
             <Container>
-                <Searchbar  onSubmit={onSubmit}/>
+                <Searchbar value={movieName} onSubmit={onSubmit}/>
                 {movies.length > 0 && <MovieList movies={movies} />}
                 {isLoading && <Loader />}
                 {error && <p>{error}</p>}

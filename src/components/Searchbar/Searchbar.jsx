@@ -44,7 +44,7 @@ const schema = yup.object().shape({
     query: yup.string().required(),
 });
 
-export const Searchbar = ({onSubmit}) => {
+export const Searchbar = ({value, onSubmit}) => {
           
     return (
                   
@@ -61,7 +61,7 @@ export const Searchbar = ({onSubmit}) => {
                     <SearchFormInput
                         type="text"
                         name="query"
-                       
+                        
                         placeholder="Search movie"
                         
                     />
