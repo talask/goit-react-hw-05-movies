@@ -33,18 +33,14 @@ export const Home = () => {
         fetchLoadingMovies();
     },[]);
 
-    const handleToMovie = (id) => {
-        console.log(id);
-    }
+    
 
     return (
         
             <Container>
-                павп
                 {isLoading && <Loader />}
                 {error && <p>{error}</p>}
-                {movies.length > 0 && <MovieList movies={movies} handleToMovie={handleToMovie}
-                />}
+                {movies.length > 0 && <MovieList movies={movies} />}
             </Container>
        
   );

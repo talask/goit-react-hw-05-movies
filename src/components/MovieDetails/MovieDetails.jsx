@@ -2,13 +2,13 @@ import { useParams, Link, useLocation, Outlet } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { getMovies } from '../MoviessAPI/MoviesAPI.js';
 import { Loader } from '../Loader/Loader.jsx';
-import { Searchbar } from "components/Searchbar/Searchbar.jsx";
+
 
 export const MovieDetails = () => {
     const location = useLocation();
     const [movie, setMovie] = useState({});
     const [isLoading, setIsLoading] = useState(false);
-    const [search, setSearch] = useState('');
+   
     const [error, setError] = useState(null);
     const { movieId } = useParams();
 
@@ -44,10 +44,7 @@ export const MovieDetails = () => {
 }, [movieId] );
     
 
-function handleSubmit(value) {
-    setSearch(value);
-    
-  }
+
 
     // genres, title, overview,vote_average, backdrop_path, poster_path
 
@@ -57,7 +54,7 @@ function handleSubmit(value) {
             {error && <p>{error}</p>}
             {
                 movieId 
-            ? <>
+            && <>
                 <div>
             
                 <img src={`https://image.tmdb.org/t/p/original${poster_path}`} alt={title} width="350px"/>
@@ -84,10 +81,10 @@ function handleSubmit(value) {
                     <Outlet />
                 </div> 
             </>
-            : 
-            <>
-                <Searchbar onSubmit={ handleSubmit }/>
-            </>
+             
+            
+                
+            
                  }
             </>
     )

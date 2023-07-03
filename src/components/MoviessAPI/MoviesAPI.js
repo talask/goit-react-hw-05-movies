@@ -7,12 +7,12 @@ const URL = 'https://api.themoviedb.org/3/';
 const options = {
     home: 'trending/all/day',
     movie: 'movie/',
-    search: "/search/",
+    search: "search/movie",
     
 }
 
-export const getMovies = async (val, param='') => {
-    const response = await axios.get(`${URL}${options[val]}${param}?${API_KEY}`);
+export const getMovies = async (val, param='', query='') => {
+    const response = await axios.get(`${URL}${options[val]}${param}?${query}${API_KEY}`);
     console.log(response)
     return response.data;
 }
