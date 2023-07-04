@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { useParams, Link, useLocation, Outlet } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { getMovies } from '../MoviessAPI/MoviesAPI.js';
@@ -9,8 +10,9 @@ export const MovieDetails = () => {
     const location = useLocation();
     
     const backLinkHref = location.state?.from ?? "/movies";
+    console.log(backLinkHref);
     const [movie, setMovie] = useState({});
-    const [isLoading, setIsLoading] = useState(false);
+   // const [isLoading, setIsLoading] = useState(false);
    
     const [error, setError] = useState(null);
     const { movieId } = useParams();
@@ -22,7 +24,7 @@ export const MovieDetails = () => {
         const getMovieToId = async () => {
         
         try{
-            setIsLoading(true);
+           // setIsLoading(true);
             setError(null);
 
             const data = await getMovies('movie', movieId);
@@ -35,7 +37,7 @@ export const MovieDetails = () => {
             setError(error.message);
             console.log(error)
         }finally{
-            setIsLoading(false);
+           // setIsLoading(false);
         }
         
         
@@ -53,7 +55,7 @@ export const MovieDetails = () => {
 
     return (
         <>
-            {isLoading && <Loader />}
+           
             {error && <p>{error}</p>}
             {
                 movieId 
@@ -87,7 +89,9 @@ export const MovieDetails = () => {
                         
                         
                     </ul>
-                    <Outlet />
+                    <Suspense fallback={<Loader/>}>
+                        <Outlet />
+                    </Suspense>
                 </div> 
             </>
              

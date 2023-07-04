@@ -10,23 +10,24 @@ import { Loader } from '../Loader/Loader.jsx';
 
 
 export const Movies = () => {
-    const [search, setSearch] = useState('');
+   // const [search, setSearch] = useState('');
     const [movies, setMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [searchParams, setSearchParams] = useSearchParams();
 
     const movieName = searchParams.get("query") ?? "";
+   
 
     useEffect( () => {
-       
-        const getsearchMovie = async () => {
         
+        const getsearchMovie = async () => {
+           
         try{
             setIsLoading(true);
             setError(null);
            
-            const data = await getMovies('search', '', `query=${search}&`);
+            const data = await getMovies('search', '', `query=${movieName}&`);
             
             if(data)
                 setMovies(data.results);
@@ -39,21 +40,18 @@ export const Movies = () => {
             setIsLoading(false);
         }
         
-        
     }
     
-    if(search.length > 0) {
+    if(movieName.length > 0) {
         getsearchMovie();
     }
    
-   
-}, [search] );
+}, [movieName] );
 
 
 
 const onSubmit = (query) => {
-    console.log(query)
-    setSearch(query);
+
     const nextParams = query !== "" ? { query } : {};
     setSearchParams(nextParams);
     
