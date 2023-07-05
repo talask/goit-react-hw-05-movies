@@ -15,4 +15,8 @@ export const LinkNav = styled(Link)`
     display: inline-block;
     margin-left: 10px;
     padding: 5px;
+
+    &:active {
+    color: orange;
+  }
 `

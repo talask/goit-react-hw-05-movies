@@ -1,19 +1,14 @@
-import { Suspense } from "react";
 import { useParams, Link, useLocation, Outlet } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import { getMovies } from '../MoviessAPI/MoviesAPI.js';
-import { Loader } from '../Loader/Loader.jsx';
+
 import { Details, Wrapper } from "./Movie.styled.jsx";
 
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
     const location = useLocation();
-    
     const backLinkHref = location.state?.from ?? "/movies";
-    console.log(backLinkHref);
-    const [movie, setMovie] = useState({});
-   // const [isLoading, setIsLoading] = useState(false);
-   
+    const [movie, setMovie] = useState({}); 
     const [error, setError] = useState(null);
     const { movieId } = useParams();
 
@@ -24,7 +19,7 @@ export const MovieDetails = () => {
         const getMovieToId = async () => {
         
         try{
-           // setIsLoading(true);
+           
             setError(null);
 
             const data = await getMovies('movie', movieId);
@@ -36,8 +31,6 @@ export const MovieDetails = () => {
         }catch(error){
             setError(error.message);
             console.log(error)
-        }finally{
-           // setIsLoading(false);
         }
         
         
@@ -49,14 +42,11 @@ export const MovieDetails = () => {
 }, [movieId] );
     
 
-
-
-    // genres, title, overview,vote_average, backdrop_path, poster_path
-
     return (
         <>
-           
+            
             {error && <p>{error}</p>}
+           
             {
                 movieId 
             && <>
@@ -81,24 +71,22 @@ export const MovieDetails = () => {
                 <h3>Aditional Information</h3>
                 <ul>
                     <li key="cast">
-                            <Link to="cast" >Cast</Link>
+                            <Link to="cast"  state={{ from: backLinkHref }}>Cast</Link>
                         </li>
                         <li key="reviews">
-                            <Link to="reviews" state={{ from: location }}>Reviews</Link>
+                            <Link to="reviews" state={{ from: backLinkHref }}>Reviews</Link>
                         </li>
                         
                         
                     </ul>
-                    <Suspense fallback={<Loader/>}>
+                   
                         <Outlet />
-                    </Suspense>
-                </div> 
+                    
+            </div> 
             </>
-             
-            
-                
-            
-                 }
-            </>
+            }
+        </>
     )
 }
+
+export default MovieDetails;

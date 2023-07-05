@@ -13,6 +13,6 @@ const options = {
 
 export const getMovies = async (val, param='', query='') => {
     const response = await axios.get(`${URL}${options[val]}${param}?${query}${API_KEY}`);
-    console.log(response)
+   
     return response.data;
 }

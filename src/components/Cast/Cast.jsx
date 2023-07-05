@@ -3,12 +3,12 @@ import { useState, useEffect } from 'react';
 import { getMovies } from '../MoviessAPI/MoviesAPI.js';
 import { Loader } from '../Loader/Loader.jsx';
 
-export const Cast = () => {
+const Cast = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [cast, setCast] = useState([]);
     const { movieId } = useParams();  
-// id, profile_path,character,name
+
 
     useEffect( () => {
        
@@ -19,7 +19,7 @@ export const Cast = () => {
                 setError(null);
     
                 const data = await getMovies('movie', `${movieId}/credits`);
-                console.log(data)
+                
                 if(data)
                    setCast(data.cast);
                 else return;
@@ -60,3 +60,5 @@ export const Cast = () => {
     )
  
 }
+
+export default Cast;

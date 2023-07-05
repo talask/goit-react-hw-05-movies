@@ -4,7 +4,7 @@ import { Loader } from '../Loader/Loader.jsx';
 import { getMovies } from '../MoviessAPI/MoviesAPI.js';
 import { MovieList } from '../MovieList/MovieList'
 
-export const Home = () => {
+const Home = () => {
     const [movies, setMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -46,3 +46,4 @@ export const Home = () => {
   );
         
 }
+export default Home;

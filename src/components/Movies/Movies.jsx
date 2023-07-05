@@ -9,8 +9,8 @@ import { useSearchParams } from "react-router-dom";
 import { Loader } from '../Loader/Loader.jsx';
 
 
-export const Movies = () => {
-   // const [search, setSearch] = useState('');
+const Movies = () => {
+   
     const [movies, setMovies] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -69,3 +69,4 @@ const onSubmit = (query) => {
     )
     
 }
+export default Movies;

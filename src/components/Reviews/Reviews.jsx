@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { getMovies } from '../MoviessAPI/MoviesAPI.js';
 import { Loader } from '../Loader/Loader.jsx'; 
 
-export const Reviews = () => {
+const Reviews = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [reviews, setReviews] = useState([]);
@@ -18,9 +18,8 @@ export const Reviews = () => {
                 setError(null);
     
                 const data = await getMovies('movie', `${movieId}/reviews`);
-                console.log(data)
+               
                 if(data)
-               // console.log(data)
                   setReviews(data.results);
                 else return;
                
@@ -60,3 +59,5 @@ export const Reviews = () => {
     </>
     )
 }
+
+export default Reviews;
