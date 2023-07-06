@@ -1,7 +1,7 @@
 import { useParams, Link, useLocation, Outlet } from "react-router-dom";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { getMovies } from '../MoviessAPI/MoviesAPI.js';
-
+import { Loader } from '../Loader/Loader';
 import { Details, Wrapper } from "./Movie.styled.jsx";
 
 
@@ -24,10 +24,8 @@ const MovieDetails = () => {
 
             const data = await getMovies('movie', movieId);
            
-            if(data)
-                setMovie(data);
-            else return;
-           
+            if(data) setMovie(data);
+                      
         }catch(error){
             setError(error.message);
             console.log(error)
@@ -79,9 +77,9 @@ const MovieDetails = () => {
                         
                         
                     </ul>
-                   
+                    <Suspense fallback={<Loader/>}>
                         <Outlet />
-                    
+                    </Suspense>
             </div> 
             </>
             }

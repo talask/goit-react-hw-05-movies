@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from "react";
 import { Loader } from './Loader/Loader';
 import { Nav, LinkNav } from './Home/Home.styled';
@@ -35,7 +35,7 @@ export const App = () => {
           <Route path="cast" element={<Cast />} />
           <Route path="reviews" element={<Reviews />} />
         </Route> 
-        <Route path="*" element={<Home />} />
+        <Route path="*" element={<Navigate to="/" replace/>} />
       </Routes>
       </Suspense>
     </>
